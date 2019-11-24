@@ -4,6 +4,16 @@ require_relative '../../lib/hanoi/spindle'
 
 module Hanoi
   RSpec.describe Spindle do
+    describe '#empty?' do
+      it 'is true when the spindle is empty' do
+        expect(Spindle.new).to be_empty
+      end
+
+      it 'is false when the spindle contains any discs' do
+        expect(Spindle.new(3)).not_to be_empty
+      end
+    end
+
     describe '#take!' do
       it 'removes the top disc' do
         spindle = Spindle.new(1, 3, 5)

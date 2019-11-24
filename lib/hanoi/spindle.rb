@@ -33,5 +33,9 @@ module Hanoi
 
       @discs = trial_discs
     end
+
+    def empty?
+      discs.empty?
+    end
   end
 end
