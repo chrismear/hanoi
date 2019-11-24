@@ -14,5 +14,9 @@ module Hanoi
     def move(from, to)
       board.move!(from, to)
     end
+
+    def finished?
+      board.finished?
+    end
   end
 end

@@ -18,5 +18,13 @@ module Hanoi
       game.move(:left, :middle)
       expect(board).to have_received(:move!).with(:left, :middle)
     end
+
+    it 'passes #finished? to the board' do
+      board = instance_double(Board, finished?: true)
+      allow(Board).to receive(:new).and_return(board)
+      game = Game.new(6)
+      expect(game).to be_finished
+      expect(board).to have_received(:finished?)
+    end
   end
 end
