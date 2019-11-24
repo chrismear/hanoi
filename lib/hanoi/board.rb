@@ -7,7 +7,7 @@ module Hanoi
   # Represents the game board. Is responsible for setting up the game, enforcing
   # legality of moves, and checking for the win state.
   class Board
-    attr_reader :left, :middle, :right
+    attr_accessor :left, :middle, :right
 
     def initialize(number_of_discs)
       @left = Spindle.new
@@ -24,6 +24,12 @@ module Hanoi
       to_spindle = spindle_from_keyword(to)
       disc = from_spindle.take!
       to_spindle.place!(disc)
+    end
+
+    def finished?
+      return false unless left.empty?
+      return false unless middle.empty?
+      true
     end
 
     private

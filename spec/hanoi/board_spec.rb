@@ -30,5 +30,20 @@ module Hanoi
         board.move!(:left, :gorilla)
       end.to raise_error(Hanoi::InvalidSpindleKeyword)
     end
+
+    describe '#finished?' do
+      it 'returns true for the finished state' do
+        board = Board.new(6)
+        board.left = Spindle.new
+        board.middle = Spindle.new
+        board.right = Spindle.new(1, 2, 3, 4, 5, 6)
+        expect(board.finished?).to be true
+      end
+
+      it 'returns false for an unfinished state' do
+        board = Board.new(6)
+        expect(board.finished?).to be false
+      end
+    end
   end
 end
