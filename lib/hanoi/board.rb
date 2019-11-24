@@ -26,6 +26,16 @@ module Hanoi
       to_spindle.place!(disc)
     end
 
+    def legal_move?(from, to)
+      from_spindle = spindle_from_keyword(from).copy
+      to_spindle = spindle_from_keyword(to).copy
+      disc = from_spindle.take!
+      to_spindle.place!(disc)
+      true
+    rescue IllegalMove
+      false
+    end
+
     def finished?
       return false unless left.empty?
       return false unless middle.empty?

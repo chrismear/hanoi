@@ -45,5 +45,22 @@ module Hanoi
         expect(board.finished?).to be false
       end
     end
+
+    describe '#legal_move?' do
+      let(:board) { Board.new(3) }
+
+      it 'returns true for a legal move' do
+        expect(board.legal_move?(:left, :middle)).to be true
+      end
+
+      it 'returns false for an illegal move' do
+        expect(board.legal_move?(:middle, :left)).to be false
+      end
+
+      it 'does not change the state of the board' do
+        board.legal_move?(:left, :middle)
+        expect(board.left.sizes).to eq([1, 2, 3])
+      end
+    end
   end
 end

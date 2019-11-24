@@ -1,5 +1,6 @@
 module Hanoi
-  class IllegalPlace < RuntimeError; end
-  class IllegalTakeFromEmptySpindle < RuntimeError; end
+  class IllegalMove < RuntimeError; end
+  class IllegalPlace < IllegalMove; end
+  class IllegalTakeFromEmptySpindle < IllegalMove; end
   class InvalidSpindleKeyword < RuntimeError; end
 end

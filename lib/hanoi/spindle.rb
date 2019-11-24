@@ -37,5 +37,9 @@ module Hanoi
     def empty?
       discs.empty?
     end
+
+    def copy
+      Spindle.new(*sizes)
+    end
   end
 end
