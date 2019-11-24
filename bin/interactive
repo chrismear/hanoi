@@ -1,0 +1,59 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require_relative '../lib/hanoi/game'
+
+def print_board(game)
+  board = game.board
+  max = (board.left.sizes + board.middle.sizes + board.right.sizes).max
+  0.upto(max - 1).each do |level|
+    line = String.new
+    [board.left, board.middle, board.right].each do |spindle|
+      if spindle.discs.length >= (max - level)
+        disc = spindle.discs[level - (max - spindle.discs.length)]
+        padding = max - disc.size
+        padding_left = padding / 2
+        padding_right = padding - padding_left
+        line << ' ' * padding_left
+        line << '#' * disc.size
+      else
+        padding = max - 1
+        padding_left = padding / 2
+        padding_right = padding - padding_left
+        line << ' ' * padding_left
+        line << '|'
+      end
+      line << ' ' * padding_right
+      line << ' '
+    end
+    puts line
+  end
+end
+
+def keyword_from_character(character)
+  case character
+  when '1'
+    :left
+  when '2'
+    :middle
+  when '3'
+    :right
+  end
+end
+
+puts 'Number of discs?'
+number = gets
+number = number.strip.to_i
+game = Hanoi::Game.new(number)
+
+until game.finished?
+  print_board(game)
+  puts 'Your move? (e.g 32 moves disc from right spindle to middle spindle)'
+  move = gets
+  from_keyword = keyword_from_character(move[0])
+  to_keyword = keyword_from_character(move[1])
+  game.move(from_keyword, to_keyword)
+end
+print_board(game)
+puts 'Congratulations!'
