@@ -6,6 +6,9 @@ require_relative '../lib/hanoi/solvers/iterative'
 require_relative '../lib/hanoi/board'
 require_relative '../lib/hanoi/printer'
 
+def clear_screen
+  puts "\e[H\e[2J"
+end
 
 puts 'Number of discs?'
 number = gets
@@ -14,10 +17,10 @@ number = number.strip.to_i
 solver = Hanoi::Solvers::Iterative.new(Hanoi::Board.new(number))
 
 until solver.board.finished?
-  puts "\e[H\e[2J"
+  clear_screen
   puts Hanoi::Printer.new(solver.board).print
   gets
   solver.step
 end
-puts "\e[H\e[2J"
+clear_screen
 puts Hanoi::Printer.new(solver.board).print
