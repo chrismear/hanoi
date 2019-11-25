@@ -10,11 +10,24 @@ def clear_screen
   puts "\e[H\e[2J"
 end
 
-puts 'Number of discs?'
-number = gets
-number = number.strip.to_i
+def classes_in_module(mod)
+  mod.constants.map { |c| mod.const_get(c) }.select { |c| c.is_a?(Class) }
+end
 
-solver = Hanoi::Solvers::Iterative.new(Hanoi::Board.new(number))
+puts 'Number of discs?'
+disc_number = gets
+disc_number = disc_number.strip.to_i
+
+puts 'Available solvers:'
+solver_classes = classes_in_module(Hanoi::Solvers)
+solver_classes.each_with_index do |solver_class, index|
+  puts "#{index + 1}. #{solver_class.name}"
+end
+puts 'Which solver?'
+solver_number = gets.strip.to_i
+solver_class = solver_classes[solver_number - 1]
+
+solver = solver_class.new(Hanoi::Board.new(disc_number))
 
 until solver.board.finished?
   clear_screen
