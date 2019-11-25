@@ -3,6 +3,7 @@
 # frozen_string_literal: true
 
 require_relative '../lib/hanoi/solvers/iterative'
+require_relative '../lib/hanoi/solvers/recursive'
 require_relative '../lib/hanoi/board'
 require_relative '../lib/hanoi/printer'
 
