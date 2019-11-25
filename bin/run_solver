@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require_relative '../lib/hanoi/solvers/iterative'
+require_relative '../lib/hanoi/board'
+
+def print_board(board)
+  lines = []
+  max = (board.left.sizes + board.middle.sizes + board.right.sizes).max
+  0.upto(max - 1).each do |level|
+    line = String.new
+    [board.left, board.middle, board.right].each do |spindle|
+      if spindle.discs.length >= (max - level)
+        disc = spindle.discs[level - (max - spindle.discs.length)]
+        padding = max - disc.size
+        padding_left = padding / 2
+        padding_right = padding - padding_left
+        line << ' ' * padding_left
+        line << '#' * disc.size
+      else
+        padding = max - 1
+        padding_left = padding / 2
+        padding_right = padding - padding_left
+        line << ' ' * padding_left
+        line << '|'
+      end
+      line << ' ' * padding_right
+      line << ' '
+    end
+    lines << line
+  end
+  lines << '-' * (max * 3 + 2)
+  puts lines.join("\n")
+end
+
+puts 'Number of discs?'
+number = gets
+number = number.strip.to_i
+
+solver = Hanoi::Solvers::Iterative.new(Hanoi::Board.new(number))
+
+until solver.board.finished?
+  puts "\e[H\e[2J"
+  print_board(solver.board)
+  gets
+  solver.step
+end
+puts "\e[H\e[2J"
+print_board(solver.board)
